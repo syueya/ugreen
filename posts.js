@@ -21,18 +21,19 @@ const POSTS_DATA = [
   { category: "docker", tid: 2154, date: "2026-01-04", title: "TrendRadar：舆情监控助手与热点筛选工具" },
 
   // ==================== 🏠 绿联类 ====================
-  { category: "ugreen", tid: 4502, date: "2026-05-28", title: "绿联开发者平台上线及申请流程" },
+  { category: "ugreen", tid: 6487, date: "2026-09-16", title: "从本地 HTML 到公网访问：GitHub Pages 网页部署与自定义域名实战" },
+  { category: "ugreen", tid: 1303, date: "2025-11-19", title: "小白必看：绿联开启 SSH + 远程连接全步骤" },
   { category: "ugreen", tid: 2688, date: "2026-02-05", title: "WebDAV使用指南" },
   { category: "ugreen", tid: 1920, date: "2025-12-20", title: "绿联如何导出日志" },
   { category: "ugreen", tid: 1764, date: "2025-12-12", title: "如何和好友分享影视音乐相册漫画" },
   { category: "ugreen", tid: 1745, date: "2025-12-11", title: "阿里域名AccessKey获取与解析" },
-  { category: "ugreen", tid: 1303, date: "2025-11-19", title: "小白必看：绿联开启 SSH + 远程连接全步骤" },
   { category: "ugreen", tid: 6018, date: "2026-08-15", title: "CF域名邮箱：再也不用暴露真实邮箱" },
   { category: "ugreen", tid: 6017, date: "2026-08-15", title: "Cloudflare域名托管" },
   { category: "ugreen", tid: 344,  date: "2025-10-16", title: "推荐个图标库" },
   { category: "ugreen", tid: 443,  date: "2025-10-17", title: "firefox浏览器输入中文" },
   { category: "ugreen", tid: 222,  date: "2025-10-13", title: "docker应用桌面快捷方式" },
-
+  { category: "ugreen", tid: 4502, date: "2026-05-28", title: "绿联开发者平台上线及申请流程" },
+  
   // ==================== 🤖 AI类 ====================
   { category: "ai", tid: 3799, date: "2026-04-13", title: "【养虾活动】OpenClaw养虾成果" },
   { category: "ai", tid: 3580, date: "2026-03-31", title: "【养虾活动】我的🦐帮手：全能助手" },
