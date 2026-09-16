@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夏夏子 的专栏汇总</title>
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --bg: #fafbfc;
+      --card-bg: #ffffff;
+      --text-main: #09090b;
+      --text-sub: #52525b;
+      --text-muted: #a1a1aa;
+      --border-light: rgba(228, 228, 231, 0.8);
+      --border-hover: rgba(161, 161, 170, 0.5);
+
+      /* 分类强调色 */
+      --c-docker: #0284c7;
+      --c-docker-bg: #f0f9ff;
+      --c-docker-border: #bae6fd;
+
+      --c-ugreen: #059669;
+      --c-ugreen-bg: #ecfdf5;
+      --c-ugreen-border: #a7f3d0;
+
+      --c-ai: #7c3aed;
+      --c-ai-bg: #f5f3ff;
+      --c-ai-border: #ddd6fe;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      /* 极简顶级质感微光背景 */
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(224, 242, 254, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(243, 232, 255, 0.4) 0%, transparent 40%),
+        linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8));
+      background-attachment: fixed;
+      color: var(--text-main);
+      padding: 32px 20px 100px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    /* 顶部流线型悬浮岛 */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 8px 12px 8px 16px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 0 1px 1px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 18px;
+      z-index: 100;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 7px 16px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-sub);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .tab-btn.active {
+      background: #18181b;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 作者胶囊标 */
+    .author-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 5px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 9999px;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .author-badge:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .author-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: #f4f4f5;
+    }
+
+    .author-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .author-tag {
+      background: #fdf2f8;
+      color: #db2777;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 9999px;
+      border: 1px solid #fbcfe8;
+    }
+
+    /* 区域与板块容器 */
+    #sectionsContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 44px;
+    }
+
+    .category-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cat-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    .cat-title {
+      font-size: 1.22rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #09090b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-count {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 纯净卡片流列表 */
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* 现代流体条目卡片 */
+    .post-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .post-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+    }
+
+    /* 左侧主体内容 */
+    .post-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* 分类微徽章 */
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      letter-spacing: 0.01em;
+      flex-shrink: 0;
+    }
+
+    .badge-cat-docker {
+      background: var(--c-docker-bg);
+      color: var(--c-docker);
+      border: 1px solid var(--c-docker-border);
+    }
+
+    .badge-cat-ugreen {
+      background: var(--c-ugreen-bg);
+      color: var(--c-ugreen);
+      border: 1px solid var(--c-ugreen-border);
+    }
+
+    .badge-cat-ai {
+      background: var(--c-ai-bg);
+      color: var(--c-ai);
+      border: 1px solid var(--c-ai-border);
+    }
+
+    .post-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #18181b;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.18s ease;
+    }
+
+    .post-card:hover .post-title {
+      color: var(--c-docker);
+    }
+
+    /* 右侧日期 */
+    .post-date {
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.8rem;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 16px 14px 60px;
+      }
+      .top-nav {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+      }
+      .author-badge {
+        align-self: flex-end;
+      }
+      .post-card {
+        padding: 12px 14px;
+      }
+      .post-title {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 顶部导航悬浮岛 -->
+    <header class="top-nav">
+      <nav class="filter-tabs" id="filterTabs"></nav>
+
+      <a href="https://club.ugnas.com/home.php?mod=space&uid=77" target="_blank" class="author-badge" title="前往夏夏子的社区个人主页">
+        <img class="author-avatar" src="https://bbs-cn-oss.ugnas.com/bbs/avatar/000/00/00/77_avatar_middle.jpg?ts=1789544993" alt="夏夏子" onerror="this.src='https://bbs-cn-oss.ugnas.com/bbs/avatar/noavatar.png'">
+        <span class="author-name">夏夏子</span>
+        <span class="author-tag">Lv.7 版主</span>
+      </a>
+    </header>
+
+    <!-- 帖子流主容器 -->
+    <main id="sectionsContainer"></main>
+
+  </div>
+
+  <script src="posts.js"></script>
+
+  <script>
+    const CATEGORIES = [
+      { id: "docker", name: "🐳 容器", label: "容器" },
+      { id: "ugreen", name: "🏠 绿联", label: "绿联" },
+      { id: "ai",     name: "🤖 AI",   label: "AI" }
+    ];
+
+    function initPage() {
+      if (typeof POSTS_DATA === "undefined") {
+        document.getElementById("sectionsContainer").innerHTML = "<p style='color:#ef4444;text-align:center;padding:40px 0;'>未检测到 posts.js 文件，请确保 index.html 与 posts.js 处于同级目录。</p>";
+        return;
+      }
+
+      renderNavTabs();
+      renderSections();
+    }
+
+    function renderNavTabs() {
+      const tabsWrap = document.getElementById("filterTabs");
+      let html = `<button class="tab-btn active" onclick="filterCategory('all', this)">全部 (${POSTS_DATA.length})</button>`;
+
+      CATEGORIES.forEach(cat => {
+        const count = POSTS_DATA.filter(item => item.category === cat.id).length;
+        html += `<button class="tab-btn" onclick="filterCategory('${cat.id}', this)">${cat.name} (${count})</button>`;
+      });
+
+      tabsWrap.innerHTML = html;
+    }
+
+    function renderSections() {
+      const container = document.getElementById("sectionsContainer");
+      let html = "";
+
+      CATEGORIES.forEach(cat => {
+        const posts = POSTS_DATA.filter(item => item.category === cat.id);
+        if (posts.length === 0) return;
+
+        html += `
+          <section class="category-section cat-${cat.id}" data-cat="${cat.id}">
+            <div class="cat-header">
+              <h2 class="cat-title">${cat.name}</h2>
+              <span class="badge-count">${posts.length} 篇</span>
+            </div>
+            <div class="posts-list">
+              ${posts.map(post => {
+                const catObj = CATEGORIES.find(c => c.id === post.category) || { label: "专栏" };
+                return `
+                  <a href="https://club.ugnas.com/forum.php?mod=viewthread&tid=${post.tid}" target="_blank" class="post-card">
+                    <div class="post-main">
+                      <span class="category-badge badge-cat-${post.category}">${catObj.label}</span>
+                      <h3 class="post-title">${post.title}</h3>
+                    </div>
+                    <span class="post-date">${post.date}</span>
+                  </a>
+                `;
+              }).join("")}
+            </div>
+          </section>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function filterCategory(cat, btn) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const sections = document.querySelectorAll(".category-section");
+      sections.forEach(sec => {
+        sec.style.display = (cat === "all" || sec.dataset.cat === cat) ? "flex" : "none";
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", initPage);
+  </script>
+</body>
+</html>
