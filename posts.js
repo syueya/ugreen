@@ -26,7 +26,7 @@ const POSTS_DATA = [
   { category: "ugreen", tid: 1303, date: "2025-11-19", title: "小白必看：绿联开启 SSH + 远程连接全步骤" },
   { category: "ugreen", tid: 2688, date: "2026-02-05", title: "WebDAV使用指南" },
   { category: "ugreen", tid: 1920, date: "2025-12-20", title: "绿联如何导出日志" },
-  { category: "ugreen", tid: 6800, date: "2026-10-16", title: "【绿联进阶】官方装的应用配置文件到底藏在哪？" },
+  { category: "ugreen", tid: 6807, date: "2026-10-16", title: "【绿联进阶】官方装的应用配置文件到底藏在哪？" },
   { category: "ugreen", tid: 6800, date: "2026-10-15", title: "把 NAS 里的 Markdown 变成专属在线知识库：公网随处访问 + 支持全文搜索" },
   { category: "ugreen", tid: 6487, date: "2026-09-16", title: "从本地 HTML 到公网访问：GitHub Pages 网页部署与自定义域名实战" },
   { category: "ugreen", tid: 1764, date: "2025-12-12", title: "如何和好友分享影视音乐相册漫画" },
